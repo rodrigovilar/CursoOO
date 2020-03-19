@@ -4,6 +4,7 @@ public class App {
 
 	static String[] nomesProdutos = { "iPhone XR", "S10" };
 	static double[] precoProdutos = { 10000.00, 5000.00 };
+	static double[] ipiProdutos = { 0.1, 0.05 };
 	
 	static String cliente = "Jose";
 	static String data = "19/03/2020";
@@ -12,26 +13,37 @@ public class App {
 	static double[] quantidadeItens = { 1.00, 2.00 };
 
 	public static void main(String[] args) {
+		Venda venda = new Venda();
+		venda.setCliente("Jose");
+		venda.setData("19/03/2020");
 		
+		System.out.println(vender(venda));
+	}
+
+	public static String vender(Venda venda) {
 		double valorTotal = 0.0;
 		
-		System.out.println("Venda realizada em " + data + " para " + cliente);
-		System.out.println("Detalhes da venda:");
+		String result = "Venda realizada em " + venda.getData() + " para " + venda.getCliente() + "\r\n";
+		result += "Detalhes da venda:\r\n";
 		
-		for (int indiceItem = 0; indiceItem < produtoItens.length; indiceItem++) {
+		for (int indiceItem = 0; indiceItem < venda.getItens().size(); indiceItem++) {
 			
-			double quantidadeProduto = quantidadeItens[indiceItem];
-			int indiceProduto = produtoItens[indiceItem];
-			
-			String nomeProduto = nomesProdutos[indiceProduto];
-			double precoProduto = precoProdutos[indiceProduto];
-			
-			double subTotal = precoProduto*quantidadeProduto;
-			System.out.println(indiceItem + " " + nomeProduto + " ( " + precoProduto + ") x " + quantidadeProduto + " = " + subTotal);
+			ItemVenda itemVenda = venda.getItens().get(indiceItem);
+						
+			double subTotal = itemVenda.getPrecoProduto()*itemVenda.getQuantidade();
+			result += (indiceItem + 1 ) + " " + itemVenda.getNomeProduto() + 
+					" ( " + itemVenda.getPrecoProduto() + ") x " + itemVenda.getQuantidade() + " = " + subTotal + "\r\n";
 			
 			valorTotal += subTotal;
 		}
 		
-		System.out.println("Valor total: " + valorTotal);
+		result += "Valor total: " + valorTotal + "\r\n";
+		
+		return result;
 	}
 }
+
+// Objeto
+// - Tipo
+// - Dados
+// - Comportamento
