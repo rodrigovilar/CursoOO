@@ -22,11 +22,10 @@ public class VendaBuilder {
 		return this;
 	}
 
-	public VendaBuilder addItem(String nomeProduto, double precoProduto, double quantidadeItem) {
+	public VendaBuilder addItem(Produto produto, double quantidadeItem) {
 		ItemVenda itemVenda = new ItemVenda();
-		itemVenda.setNomeProduto(nomeProduto);
-		itemVenda.setPrecoProduto(precoProduto);
 		itemVenda.setQuantidade(quantidadeItem);
+		itemVenda.setProduto(produto);
 		
 		venda.addItem(itemVenda);
 		

@@ -2,24 +2,25 @@ package br.edu.ufcg.virtus.up.oo.vendas;
 
 public class ItemVenda {
 
-	private String nomeProduto;
-	private double precoProduto;
+	private Venda venda;
+	private Produto produto;
 	private double quantidade;
 
-	public String getNomeProduto() {
-		return nomeProduto;
+	
+	public Venda getVenda() {
+		return venda;
 	}
 
-	public void setNomeProduto(String nomeProduto) {
-		this.nomeProduto = nomeProduto;
+	public void setVenda(Venda venda) {
+		this.venda = venda;
 	}
 
-	public double getPrecoProduto() {
-		return precoProduto;
+	public Produto getProduto() {
+		return produto;
 	}
 
-	public void setPrecoProduto(double precoProduto) {
-		this.precoProduto = precoProduto;
+	public void setProduto(Produto produto) {
+		this.produto = produto;
 	}
 
 	public double getQuantidade() {
@@ -28,6 +29,10 @@ public class ItemVenda {
 
 	public void setQuantidade(double quantidade) {
 		this.quantidade = quantidade;
+	}
+
+	public double subTotal() {
+		return this.getProduto().getPrecoComIPI() * this.getQuantidade();		
 	}
 
 }

@@ -21,25 +21,29 @@ public class App {
 	}
 
 	public static String vender(Venda venda) {
+		StringBuilder result = 
+			new StringBuilder()
+				.append("Venda realizada em " + venda.getData() + " para " + venda.getCliente() + "\r\n");
+		
+		double valorTotal = detalhesVender(venda, result);
+		return result.append("Valor total: " + valorTotal + "\r\n").toString();
+	}
+	
+	private static double detalhesVender(Venda venda, StringBuilder result) {
 		double valorTotal = 0.0;
-		
-		String result = "Venda realizada em " + venda.getData() + " para " + venda.getCliente() + "\r\n";
-		result += "Detalhes da venda:\r\n";
-		
+
+		result.append("Detalhes da venda:\r\n");
+
 		for (int indiceItem = 0; indiceItem < venda.getItens().size(); indiceItem++) {
 			
 			ItemVenda itemVenda = venda.getItens().get(indiceItem);
-						
-			double subTotal = itemVenda.getPrecoProduto()*itemVenda.getQuantidade();
-			result += (indiceItem + 1 ) + " " + itemVenda.getNomeProduto() + 
-					" ( " + itemVenda.getPrecoProduto() + ") x " + itemVenda.getQuantidade() + " = " + subTotal + "\r\n";
-			
+			double subTotal = itemVenda.subTotal();
+			result.append( (indiceItem + 1 ) + " " + itemVenda.getProduto().getNome() + 
+					" ( " + itemVenda.getProduto().getPreco() + ") x " + itemVenda.getQuantidade() + " = " + subTotal + "\r\n");
 			valorTotal += subTotal;
 		}
 		
-		result += "Valor total: " + valorTotal + "\r\n";
-		
-		return result;
+		return valorTotal;
 	}
 }
 
