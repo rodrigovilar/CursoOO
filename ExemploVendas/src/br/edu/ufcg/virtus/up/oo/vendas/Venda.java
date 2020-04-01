@@ -9,6 +9,7 @@ public class Venda {
 	private String cliente;
 	private double lGuedes; // Imposto na venda e não do produto
 	private List<ItemVenda> itens = new ArrayList<>();
+	private double subTotal;
 	
 	public double getlGuedes() {
 		return lGuedes;
@@ -42,23 +43,14 @@ public class Venda {
 		itens.add(itemVenda);
 	}
 	
-	public double statusVenda(StringBuilder result) {
-		double valorTotal = 0.0;
-
-		result.append("Detalhes da venda:\r\n");
-
-		for (int indiceItem = 0; indiceItem < this.getItens().size(); indiceItem++) {
-			
-			ItemVenda itemVenda = this.getItens().get(indiceItem);
-			double subTotal = itemVenda.subTotal();
-			result.append( (indiceItem + 1 ) + " " + itemVenda.getProduto().getNome() + 
-					" ( " + itemVenda.getProduto().getPreco() + " ) x " + itemVenda.getQuantidade() +" x ( 1 + " + itemVenda.getProduto().getAliquotaIPI() + " ) = " + subTotal + "\r\n");
-			valorTotal += subTotal;
+	public double subTotalVenda() {
+		subTotal = 0.0;
+		for (ItemVenda item : itens) {
+			double itemSubTotal = item.subTotal();
+			subTotal += itemSubTotal;
 		}
-		
-		calculateLGuedes(valorTotal);
-		
-		return valorTotal;
+		calculateLGuedes(subTotal);
+		return subTotal;
 	}
 
 	private void calculateLGuedes(double valorTotal) {

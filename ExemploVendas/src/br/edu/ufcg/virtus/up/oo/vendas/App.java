@@ -49,13 +49,22 @@ public class App {
 			new StringBuilder()
 				.append("Venda realizada em " + venda.getData() + " para " + venda.getCliente() + "\r\n");
 		
-		double valorParcial = venda.statusVenda(result);
+		statusVenda(result, venda);
+		double valorParcial = venda.subTotalVenda();
 		double valorTotal = valorParcial * (1 + venda.getlGuedes());
 		result.append("Valor parcial: " + valorParcial + "\r\n");
 		return result.append("Valor total: " + valorParcial + " ( 1 + " + venda.getlGuedes() + " )" + " = " + BigDecimal.valueOf(valorTotal).setScale(2, RoundingMode.HALF_UP).doubleValue() + "\r\n").toString();
 	}
 	
-
+	private static void statusVenda(StringBuilder result, Venda venda) {
+		result.append("Detalhes da venda:\r\n");
+		for (int indiceItem = 0; indiceItem < venda.getItens().size(); indiceItem++) {
+			ItemVenda itemVenda = venda.getItens().get(indiceItem);
+			double subTotal = itemVenda.subTotal();
+			result.append( (indiceItem + 1 ) + " " + itemVenda.getProduto().getNome() + 
+					" ( " + itemVenda.getProduto().getPreco() + " ) x " + itemVenda.getQuantidade() +" x ( 1 + " + itemVenda.getProduto().getAliquotaIPI() + " ) = " + subTotal + "\r\n");
+		}
+	}
 }
 
 // Objeto
